@@ -1,0 +1,24 @@
+body{
+  width: 100dvw;
+  width: 100vw;
+  height: 100dvh;
+  height: 100vh;
+}
+
+#container{
+  width: 100%;
+}
+
+.notes{
+  display: flex;
+}
+
+.note {
+  width: 100px;
+  height: 50px;
+  border: 1px solid black;
+  text-align: center;
+  line-height: 50px;
+  margin: 5px;
+  cursor: pointer;
+}
