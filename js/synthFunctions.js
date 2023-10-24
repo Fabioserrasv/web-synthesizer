@@ -40,5 +40,5 @@ function getCurrentWaveForm() {
 
 function changeVolume(event) {
   volumeDisplay.innerHTML = event.target.value
-  gainNode.gain.value = volumeInput.value;
+  synthesizer.changeVolume(volumeInput.value);
 }
