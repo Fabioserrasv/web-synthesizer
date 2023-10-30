@@ -3,18 +3,36 @@ class Synthesizer {
    * 
    * @param {Note[]} notes 
    */
-  constructor(notes) {
+  constructor() {
     this.actx = new (AudioContext || webkitAudioContext)();
-    this.notes = notes;
+
     this.waveForm = "sine";
+    this.envelope = {
+      attack: 0.005,
+      decay: 0.1,
+      sustain: 0.6,
+      release: 0.1
+    }
 
     // setting gainnode to adjust volume
     this.gainNode = this.actx.createGain();
     this.gainNode.connect(this.actx.destination)
   }
 
+  setNotes(notes) {
+    this.notes = notes;
+  }
+
+  getActx() {
+    return this.actx;
+  }
+
   changeVolume(value) {
     this.gainNode.gain.value = value;
+  }
+
+  setWaveForm(waveForm) {
+    this.waveForm = waveForm;
   }
 
   /**
@@ -43,11 +61,11 @@ class Synthesizer {
     return null;
   }
 
-  play(note){
+  play(note) {
     note.play(
       this.actx,
-      this.gainNode,
-      this.waveForm
+      this.waveForm,
+      this.envelope
     );
   }
 
@@ -55,18 +73,20 @@ class Synthesizer {
    * 
    * @param {number} frequency 
    */
-  playNote(frequency) {
-    let note = this.#getNoteByFrequency(frequency);
+  playNote({
+    frequency,
+    code
+  }) {
+    let note = null
 
-    if (note != null) {
-      this.play(note)
+    if (frequency) {
+      note = this.#getNoteByFrequency(frequency);
+    } else if (code) {
+      note = this.#getNoteByKeyCode(code)
     }
-  }
-
-  playNoteByKeyCode(code) {
-    let note = this.#getNoteByKeyCode(code)
 
     if (note != null) {
+      console.log(note);
       this.play(note)
     }
   }
@@ -75,13 +95,28 @@ class Synthesizer {
    * 
    * @param {number} frequency 
    */
-  stopNote(code = null) {
+  stopNote({
+    frequency,
+    code
+  }) {
     let note = null
-    note = this.#getNoteByKeyCode(code)
-    
+    if (frequency) {
+      note = this.#getNoteByFrequency(frequency);
+    } else if (code) {
+      note = this.#getNoteByKeyCode(code)
+    }
 
     if (note != null) {
-      note.stop();
+      note.stop(this.envelope);
+    }
+  }
+
+  setADSRValues(attack, decay, sustain, release) {
+    this.envelope = {
+      attack,
+      decay,
+      sustain,
+      release
     }
   }
 }
