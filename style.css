@@ -3,7 +3,7 @@ body{
   width: 100vw;
   height: 100dvh;
   height: 100vh;
-  background-color: black;
+  background-color: grey;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -15,28 +15,53 @@ body{
 
 .notes{
   display: flex;
-  width: 100%;
-  align-items: center;
   justify-content: center;
 }
 
 .note {
-  width: 80px;
+  width: 60px;
   height: 200px;
-  border: 1px solid black;
+  /* border: 1px solid black; */
   text-align: center;
   line-height: 50px;
-  margin: 5px;
   cursor: pointer;
   background-color: white;
+}
+
+.note.b{
+  height: 120px;
+  background-color: black;
+  color: white;
+}
+
+.note.playing{
+  color: orange;
 }
 
 .options {
   margin-top: 50px;
   color: white;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-areas: "volume wave denote adsr";
   width: 100%;
-  align-items: center;
-  justify-content: center;
+  align-items: end;
+  margin-bottom: 1rem;
+}
+
+#waveSelector{
+  grid-area: wave;
+}
+
+.adsr{
+  grid-area: adsr;
+  margin-left: 20%;
+}
+
+.denotediv{
+  grid-area: denote;
+  margin-left: 20%;
+}
+
+.volumediv{
+  grid-area: volume;
 }

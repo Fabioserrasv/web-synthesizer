@@ -10,26 +10,45 @@
 
 <body>
   <div id="container">
-    <div class="notes"></div>
 
     <div class="options">
-      <select name="waveSelector" id="waveSelector"></select>
-
-      <div>
+      
+      <div class="volumediv">
         <span>Volume: </span>
         <input id="volumeInput" name="volume" type="range" min="-1" max="1.0" step="0.01" value="0.5" list="volumes" />
         <span id="volumeDisplay">1</span>
       </div>
       
+      <select name="waveSelector" id="waveSelector"></select>
+      
+      <div class="denotediv">
+        <span>Denote</span>
+        <input id="denote" name="denote" type="range" min="1" max="100" step="0.01" value="10"/>
+        <span id="denoteDisplay">10</span>
+      </div>
+
       <div class="adsr">
         <span>ADSR</span>
-        
-        <input id="attack" name="attack" type="range" min="0" max="2" step="0.01" value="0" />
-        <input id="decay" name="decay" type="range" min="0" max="1.0" step="0.01" value="0" />
-        <input id="sustain" name="sustain" type="range" min="0" max="1.0" step="0.01" value="0" />
-        <input id="release" name="release" type="range" min="0" max="2" step="0.01" value="0" />
+        <div>
+          <span>Attack:</span>
+          <input id="attack" name="attack" type="range" min="0" max="2" step="0.01" value="0" />
+        </div>
+        <div>
+          <span>Decay:</span>
+          <input id="decay" name="decay" type="range" min="0" max="1.0" step="0.01" value="0" />
+        </div>
+        <div>
+          <span>Sustain:</span>
+          <input id="sustain" name="sustain" type="range" min="0" max="1.0" step="0.01" value="0" />
+        </div>
+        <div>
+          <span>Release:</span>
+          <input id="release" name="release" type="range" min="0" max="2" step="0.01" value="0" />
+        </div>
       </div>
     </div>
+
+    <div class="notes"></div>
   </div>
 
   <!-- <button id="play">play</button> -->

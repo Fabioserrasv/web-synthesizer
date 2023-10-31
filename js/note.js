@@ -14,6 +14,8 @@ class Note {
     this.actx = actx
     this.oscs = []
     this.waveForm = null
+
+    this.html = null
   }
 
   #applyASDRKeyDown(oscT, attack, decay, sustain, time) {
@@ -59,22 +61,24 @@ class Note {
     return [osc, gainNode]
   }
 
-  #createMultipleOscillator() {
+  #createMultipleOscillator(denote) {
     const oscs = []
     oscs.push(this.#createOscillator(0))
-    oscs.push(this.#createOscillator(-10))
-    oscs.push(this.#createOscillator(10))
+    oscs.push(this.#createOscillator(-denote))
+    oscs.push(this.#createOscillator(denote))
     return oscs
   }
 
-  play(actx, waveForm, envelope) {
+  play(actx, waveForm, envelope, denote) {
     if (this.playing) return;
     this.playing = true;
 
     this.actx = actx;
     this.waveForm = waveForm;
 
-    this.oscs = this.#createMultipleOscillator();
+    this.oscs = this.#createMultipleOscillator(denote);
+
+    this.addPlaying(this.html)
 
     this.oscs.forEach((osc) => {
       this.#applyASDRKeyDown(
@@ -90,6 +94,8 @@ class Note {
   stop(envelope) {
     this.playing = false;
 
+    this.removePlaying(this.html)
+
     this.oscs.forEach((osc) => {
       this.#applyASDRKeyUp(
         osc[1],
@@ -97,5 +103,22 @@ class Note {
         1
       )
     })
+  }
+
+  setHTMLElement(element){
+    this.html = element
+  }
+
+  addPlaying(note) {
+    const classes = note.className.split(" ")
+    classes.push("playing")
+    note.className = classes.join(" ")
+  }
+  
+  removePlaying(note) {
+    let classes = note.className.split(" ")
+    const index = classes.indexOf("playing");
+    classes.splice(index, 1)
+    note.className = classes.join(" ") 
   }
 }

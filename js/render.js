@@ -9,6 +9,8 @@ const attackSelector = document.querySelector("#attack")
 const decaySelector = document.querySelector("#decay")
 const sustainSelector = document.querySelector("#sustain")
 const releaseSelector = document.querySelector("#release")
+const denoteSelector = document.querySelector("#denote")
+const denoteDisplay = document.querySelector("#denoteDisplay");
 
 // const gainNode = actx.createGain();
 // gainNode.connect(actx.destination)
@@ -36,14 +38,22 @@ function createNotesObjects(notesToCreate) {
 function createNotes(notes, synthesizer) {
   for (let i = 0; i < notes.length; i++) {
     const newNote = createNote(notes[i])
+    notes[i].setHTMLElement(newNote)
     notesContainer.appendChild(newNote)
   }
 }
 
 function createNote(data) {
   const newNote = document.createElement("div");
-  newNote.className = "note"
-  newNote.innerHTML = data.name
+
+  let classes = "note";
+
+  if (data.name.includes("/")) {
+    classes += " b";
+  }
+
+  newNote.className = classes
+  newNote.innerHTML = data.key.name
 
   newNote.dataset["note"] = data.name
   newNote.dataset["frequency"] = data.frequency
@@ -54,7 +64,7 @@ function createNote(data) {
 
 function setNoteEvents(newNote, frequency) {
   newNote.addEventListener("mousedown", () => {
-    synthesizer.playNote({ frequency: frequency, code: null })
+    synthesizer.playNote({ frequency: frequency, code: null });
   }, false);
   newNote.addEventListener("mouseup", () => {
     synthesizer.stopNote({ frequency: frequency, code: null })
@@ -64,8 +74,10 @@ function setNoteEvents(newNote, frequency) {
       synthesizer.playNote({ frequency: frequency, code: null })
     }
   }, false);
-  newNote.addEventListener("mouseleave", () => {
-    synthesizer.stopNote({ frequency: frequency, code: null })
+  newNote.addEventListener("mouseleave", (e) => {
+    if (e.buttons & 1) {
+      synthesizer.stopNote({ frequency: frequency, code: null })
+    }
   }, false);
 }
 
@@ -80,7 +92,7 @@ function createSelectWaveOptions() {
   })
 }
 
-function setOnChangeEventsADSR(){
+function setOnChangeEventsADSR() {
   attackSelector.addEventListener("change", changeADSR)
   decaySelector.addEventListener("change", changeADSR)
   sustainSelector.addEventListener("change", changeADSR)
@@ -110,8 +122,14 @@ function changeADSR() {
   synthesizer.setADSRValues(attack, decay, sustain, release)
 }
 
+function changeDenote() {
+  synthesizer.setDenote(denoteSelector.value)
+  denoteDisplay.innerHTML = denoteSelector.value
+}
+
 createKeyboard();
 setOnChangeEventsADSR();
 waveSelector.addEventListener("change", (e) => { synthesizer.setWaveForm(e.target.value); console.log(e.target.value); })
+denoteSelector.addEventListener("change", changeDenote);
 window.addEventListener("keydown", playByKeyCode)
 window.addEventListener("keyup", stopByKeyCode)

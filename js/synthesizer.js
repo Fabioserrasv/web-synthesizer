@@ -7,6 +7,7 @@ class Synthesizer {
     this.actx = new (AudioContext || webkitAudioContext)();
 
     this.waveForm = "sine";
+    this.denote = 10
     this.envelope = {
       attack: 0.005,
       decay: 0.1,
@@ -33,6 +34,10 @@ class Synthesizer {
 
   setWaveForm(waveForm) {
     this.waveForm = waveForm;
+  }
+
+  setDenote(denote){
+    this.denote = parseFloat(denote);
   }
 
   /**
@@ -65,7 +70,8 @@ class Synthesizer {
     note.play(
       this.actx,
       this.waveForm,
-      this.envelope
+      this.envelope,
+      this.denote
     );
   }
 
