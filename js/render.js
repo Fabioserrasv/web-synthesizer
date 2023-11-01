@@ -12,6 +12,12 @@ const releaseSelector = document.querySelector("#release")
 const denoteSelector = document.querySelector("#denote")
 const denoteDisplay = document.querySelector("#denoteDisplay");
 
+const lowpassFreqSelector = document.querySelector("#lowpassFreq")
+const lowpassFreqDisplay = document.querySelector("#lowpassFreqDisplay");
+
+const lowpassQSelector = document.querySelector("#lowpassQ")
+const lowpassQDisplay = document.querySelector("#lowpassQDisplay");
+
 // const gainNode = actx.createGain();
 // gainNode.connect(actx.destination)
 let synthesizer
@@ -127,9 +133,24 @@ function changeDenote() {
   denoteDisplay.innerHTML = denoteSelector.value
 }
 
+function changeLowpass(){
+  synthesizer.setLowpass(
+    parseFloat(lowpassFreqSelector.value),
+    parseFloat(lowpassQSelector.value)
+  )
+  lowpassFreqDisplay.innerHTML = lowpassFreqSelector.value
+  lowpassQDisplay.innerHTML = lowpassQSelector.value
+}
+
+function applyEvents(){
+  waveSelector.addEventListener("change", (e) => { synthesizer.setWaveForm(e.target.value); console.log(e.target.value); })
+  denoteSelector.addEventListener("change", changeDenote);
+  window.addEventListener("keydown", playByKeyCode)
+  window.addEventListener("keyup", stopByKeyCode)
+  lowpassFreqSelector.addEventListener("change", changeLowpass)
+  lowpassQSelector.addEventListener("change", changeLowpass)
+}
+
 createKeyboard();
 setOnChangeEventsADSR();
-waveSelector.addEventListener("change", (e) => { synthesizer.setWaveForm(e.target.value); console.log(e.target.value); })
-denoteSelector.addEventListener("change", changeDenote);
-window.addEventListener("keydown", playByKeyCode)
-window.addEventListener("keyup", stopByKeyCode)
+applyEvents()

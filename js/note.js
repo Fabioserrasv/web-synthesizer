@@ -10,7 +10,7 @@ class Note {
     this.key = key
     this.frequency = frequency;
     this.playing = false;
-    
+
     this.actx = actx
     this.oscs = []
     this.waveForm = null
@@ -44,6 +44,17 @@ class Note {
     gainNode.gain.linearRampToValueAtTime(0, relEnd)
   }
 
+  #applyLowPassFilter(osc, { freq, Q }) {
+    const MAX = this.actx.sampleRate / 2;
+    const filter = this.actx.createBiquadFilter();
+
+    filter.type = 'lowpass';
+    filter.frequency.value = freq * MAX;
+    filter.Q.value = Q * 30;
+    console.log(filter)
+    return filter
+  }
+
   #createOscillator(detune = 0) {
     const osc = this.actx.createOscillator();
     const gainNode = this.actx.createGain();
@@ -51,7 +62,7 @@ class Note {
     osc.frequency.value = this.frequency
     osc.detune.value = detune
     osc.type = this.waveForm // Get wave type on Select
-    
+
     gainNode.gain.value = 0;
     gainNode.connect(this.actx.destination)
 
@@ -69,7 +80,7 @@ class Note {
     return oscs
   }
 
-  play(actx, waveForm, envelope, denote) {
+  play(actx, waveForm, envelope, denote, lowpass) {
     if (this.playing) return;
     this.playing = true;
 
@@ -81,13 +92,16 @@ class Note {
     this.addPlaying(this.html)
 
     this.oscs.forEach((osc) => {
+      let filter = this.#applyLowPassFilter(osc[1], lowpass)
+      osc[1].connect(filter)
+      filter.connect(this.actx.destination);
       this.#applyASDRKeyDown(
-        osc, 
+        osc,
         envelope.attack,
         envelope.decay,
         envelope.sustain,
         1
-      )
+      );
     })
   }
 
@@ -105,7 +119,7 @@ class Note {
     })
   }
 
-  setHTMLElement(element){
+  setHTMLElement(element) {
     this.html = element
   }
 
@@ -114,11 +128,11 @@ class Note {
     classes.push("playing")
     note.className = classes.join(" ")
   }
-  
+
   removePlaying(note) {
     let classes = note.className.split(" ")
     const index = classes.indexOf("playing");
     classes.splice(index, 1)
-    note.className = classes.join(" ") 
+    note.className = classes.join(" ")
   }
 }

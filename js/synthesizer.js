@@ -5,7 +5,6 @@ class Synthesizer {
    */
   constructor() {
     this.actx = new (AudioContext || webkitAudioContext)();
-
     this.waveForm = "sine";
     this.denote = 10
     this.envelope = {
@@ -14,14 +13,23 @@ class Synthesizer {
       sustain: 0.6,
       release: 0.1
     }
-
-    // setting gainnode to adjust volume
+    this.lowpass = {
+      freq: 0,
+      Q: 0
+    }
     this.gainNode = this.actx.createGain();
     this.gainNode.connect(this.actx.destination)
   }
 
   setNotes(notes) {
     this.notes = notes;
+  }
+
+  setLowpass(freq, Q){
+    this.lowpass = {
+      freq,
+      Q
+    }
   }
 
   getActx() {
@@ -71,7 +79,8 @@ class Synthesizer {
       this.actx,
       this.waveForm,
       this.envelope,
-      this.denote
+      this.denote,
+      this.lowpass
     );
   }
 
