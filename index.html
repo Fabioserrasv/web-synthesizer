@@ -12,18 +12,12 @@
   <div id="container">
 
     <div class="options">
-      
-      <div class="volumediv">
-        <span>Volume: </span>
-        <input id="volumeInput" name="volume" type="range" min="-1" max="1.0" step="0.01" value="0.5" list="volumes" />
-        <span id="volumeDisplay">1</span>
-      </div>
-      
+
       <select name="waveSelector" id="waveSelector"></select>
-      
+
       <div class="denotediv">
         <span>Denote</span>
-        <input id="denote" name="denote" type="range" min="1" max="100" step="0.01" value="10"/>
+        <input id="denote" name="denote" type="range" min="1" max="100" step="0.01" value="10" />
         <span id="denoteDisplay">10</span>
       </div>
 
@@ -35,7 +29,7 @@
           <input id="lowpassFreq" name="lowpassFreq" type="range" min="0" max="1" step="0.01" value="0" />
           <span id="lowpassFreqDisplay"></span>
         </div>
-        
+
         <div>
           <span>Q</span>
           <input id="lowpassQ" name="lowpassQ" type="range" min="0" max="1" step="0.01" value="0" />
@@ -70,9 +64,11 @@
   <!-- <button id="play">play</button> -->
 
   <script src="js/config.js"></script>
+  <script src="js/entities/input-events.js"></script>
+  <script src="js/entities/display.js"></script>
+  <script src="js/entities/note.js"></script>
+  <script src="js/entities/synthesizer.js"></script>
   <script src="js/utils.js"></script>
-  <script src="js/note.js"></script>
-  <script src="js/synthesizer.js"></script>
   <script src="js/render.js"></script>
   <!-- <script src="./main.js"></script> -->
 </body>
