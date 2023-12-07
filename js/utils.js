@@ -36,11 +36,11 @@ function changeADSR(display, synthesizer) {
   synthesizer.ADSR.setValues(attack, decay, sustain, release);
 }
 
-function changeDenote(display, synthesizer) {
-  const { denoteSelector } = display;
+function changeDetune(display, synthesizer) {
+  const { detuneSelector } = display;
 
-  synthesizer.setDenote(denoteSelector.value);
-  denoteDisplay.innerHTML = denoteSelector.value;
+  synthesizer.setDetune(detuneSelector.value);
+  detuneDisplay.innerHTML = detuneSelector.value;
 }
 
 function changeLowpass(display, synthesizer) {

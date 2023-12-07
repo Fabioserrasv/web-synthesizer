@@ -30,11 +30,12 @@ class Synthesizer {
   constructor() {
     this.actx = new (AudioContext || webkitAudioContext)();
     this.waveForm = 'sine';
-    this.denote = 10;
+    this.detune = 10;
     this.ADSR = new ADSR(0.005, 0.1, 0.6, 0.1);
     this.lowpass = new Lowpass(0, 0);
     this.gainNode = this.actx.createGain();
     this.gainNode.connect(this.actx.destination);
+    this.notes = [];
   }
 
   setNotes(notes) {
@@ -49,8 +50,8 @@ class Synthesizer {
     this.waveForm = waveForm;
   }
 
-  setDenote(denote) {
-    this.denote = parseFloat(denote);
+  setDetune(detune) {
+    this.detune = parseFloat(detune);
   }
 
   #getNoteByFrequency(frequency) {
@@ -72,7 +73,7 @@ class Synthesizer {
   }
 
   #play(note) {
-    note.play(this.actx, this.waveForm, this.ADSR, this.denote, this.lowpass);
+    note.play(this.actx, this.waveForm, this.ADSR, this.detune, this.lowpass);
   }
 
   playNote({ frequency, code }) {

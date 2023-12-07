@@ -1,13 +1,14 @@
 class Display {
   constructor() {
     this.notesContainer = document.querySelector('.notes');
+    this.notesBContainer = document.querySelector('.notesb');
     this.optionsContainer = document.querySelector('.options');
 
-    this.denoteDisplay = document.querySelector('#denoteDisplay');
+    this.detuneDisplay = document.querySelector('#detuneDisplay');
     this.lowpassFreqDisplay = document.querySelector('#lowpassFreqDisplay');
     this.lowpassQDisplay = document.querySelector('#lowpassQDisplay');
 
-    this.denoteSelector = document.querySelector('#denote');
+    this.detuneSelector = document.querySelector('#detune');
     this.waveSelector = document.querySelector('#waveSelector');
     this.attackSelector = document.querySelector('#attack');
     this.decaySelector = document.querySelector('#decay');
@@ -25,13 +26,17 @@ class Display {
     for (let i = 0; i < notes.length; i++) {
       const newNote = this.#createNote(synthesizer, notes[i]);
       notes[i].setHTMLElement(newNote);
-      this.notesContainer.appendChild(newNote);
+      if (notes[i].name.includes('/')) {
+        this.notesBContainer.appendChild(newNote);
+      }else{
+        this.notesContainer.appendChild(newNote);
+      }
     }
   }
 
   #createNote(synthesizer, data) {
     const newNote = document.createElement('div');
-
+    const span = document.createElement('span');
     let classes = 'note';
 
     if (data.name.includes('/')) {
@@ -39,7 +44,8 @@ class Display {
     }
 
     newNote.className = classes;
-    newNote.innerHTML = data.key.name;
+    span.innerHTML = data.key.name
+    newNote.appendChild(span);
 
     newNote.dataset['note'] = data.name;
     newNote.dataset['frequency'] = data.frequency;

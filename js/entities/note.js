@@ -66,30 +66,33 @@ class Note {
     return [osc, gainNode];
   }
 
-  #createMultipleOscillator(denote) {
+  #createMultipleOscillator(detune) {
     const oscs = [];
     oscs.push(this.#createOscillator(0));
-    oscs.push(this.#createOscillator(-denote));
-    oscs.push(this.#createOscillator(denote));
+    oscs.push(this.#createOscillator(-detune));
+    oscs.push(this.#createOscillator(detune));
     return oscs;
   }
 
-  play(actx, waveForm, ADSR, denote, lowpass) {
+  play(actx, waveForm, ADSR, detune, lowpass) {
     if (this.playing) return;
     this.playing = true;
 
     this.actx = actx;
     this.waveForm = waveForm;
 
-    this.oscs = this.#createMultipleOscillator(denote);
+    this.oscs = this.#createMultipleOscillator(detune);
 
     this.addPlaying(this.html);
 
     this.oscs.forEach((osc) => {
-      let filter = this.#applyLowPassFilter(osc[1], lowpass);
-      osc[1].connect(filter);
-      filter.connect(this.actx.destination);
+      if (lowpass.freq != 0 && lowpass.Q != 0){
+        let filter = this.#applyLowPassFilter(osc[1], lowpass);
+        osc[1].connect(filter);
+        filter.connect(this.actx.destination);
+      }
       this.#applyASDRKeyDown(osc, ADSR.attack, ADSR.decay, ADSR.sustain, 1);
+      console.log(osc)
     });
   }
 
@@ -101,6 +104,7 @@ class Note {
     this.oscs.forEach((osc) => {
       this.#applyASDRKeyUp(osc[1], ADSR.release, 1);
     });
+    this.oscs = []
   }
 
   setHTMLElement(element) {

@@ -1,67 +1,151 @@
-body{
+body {
   width: 100dvw;
   width: 100vw;
   height: 100dvh;
   height: 100vh;
-  background-color: grey;
+  background-color: #232323;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-#container{
+#container {
   width: 100%;
-}
-
-.notes{
+  height: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
-}
-
-.note {
-  width: 60px;
-  height: 200px;
-  /* border: 1px solid black; */
-  text-align: center;
-  line-height: 50px;
-  cursor: pointer;
-  background-color: white;
-}
-
-.note.b{
-  height: 120px;
-  background-color: black;
-  color: white;
-}
-
-.note.playing{
-  color: orange;
+  margin-bottom: 20%;
+  align-items: center;
 }
 
 .options {
   margin-top: 50px;
   color: white;
   display: grid;
-  grid-template-areas: "volume wave denote adsr";
-  width: 100%;
+  grid-template-areas: "volume wave detune adsr";
+  width: 50%;
   align-items: end;
   margin-bottom: 1rem;
 }
 
-#waveSelector{
+.synthesizer {
+  width: 100%;
+  height: 25%;
+}
+
+.notes {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  position: absolute;
+}
+
+.notesb {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  position: absolute;
+  left: 10px;
+}
+
+.note {
+  /* width: 40px;
+  height: 200px; */
+  width: 120px;
+  height: 400px;
+  text-align: center;
+  line-height: 50px;
+  cursor: pointer;
+  background-color: white;
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+  color: rgba(0, 0, 0, 0.4);
+
+  display: flex;
+  align-items: end;
+  text-align: center;
+  justify-content: center;
+}
+
+.note.b {
+  /* height: 120px;
+  width: 30px; 
+  margin-right: 10px;*/
+  height: 280px;
+  width: 90px;
+  margin-right: 25px;
+  
+  color: rgba(255, 255, 255, 0.4);
+  z-index: 999;
+  background-color: black;
+}
+
+.note:first-child {
+  border-top-left-radius: 0.2rem;
+  border-bottom-left-radius: 0.2rem;
+}
+
+.note:last-child {
+  border-top-right-radius: 0.2rem;
+  border-bottom-right-radius: 0.2rem;
+}
+
+.note.b:nth-child(2),
+.note.b:nth-child(5) {
+  margin-right: 150px;
+}
+
+.note.playing {
+  transform: scale(0.95);
+  transition: transform 0.2s ease;
+}
+
+#waveSelector {
   grid-area: wave;
 }
 
-.adsr{
+.adsr {
   grid-area: adsr;
   margin-left: 20%;
 }
 
-.denotediv{
-  grid-area: denote;
+.detunediv {
+  grid-area: detune;
   margin-left: 20%;
 }
 
-.volumediv{
-  grid-area: volume;
+input[type="range"] {
+  -webkit-appearance: none;
+  height: 15px;
+  border-radius: 8px;
+  background: #555;
+  outline: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #666;
+  cursor: pointer;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+  transition: background 0.3s ease-in-out;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  background: #888;
+}
+
+select {
+  padding: 8px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  appearance: none;
+  background-color: #333;
+  color: white;
+  cursor: pointer;
+  outline: none;
+  transition: transform 0.2s ease;
 }

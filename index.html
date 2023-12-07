@@ -13,12 +13,13 @@
 
     <div class="options">
 
+
       <select name="waveSelector" id="waveSelector"></select>
 
-      <div class="denotediv">
-        <span>Denote</span>
-        <input id="denote" name="denote" type="range" min="1" max="100" step="0.01" value="10" />
-        <span id="denoteDisplay">10</span>
+      <div class="detunediv">
+        <span>Detune</span>
+        <input id="detune" class="teste" name="detune" type="range" min="0" max="100" step="0.01" value="10" />
+        <span id="detuneDisplay">10</span>
       </div>
 
       <div class="lowpassdiv">
@@ -58,7 +59,11 @@
       </div>
     </div>
 
-    <div class="notes"></div>
+    <div class="synthesizer">
+      <div class="notesb"></div>
+      <div class="notes"></div>
+    </div>
+
   </div>
 
   <!-- <button id="play">play</button> -->

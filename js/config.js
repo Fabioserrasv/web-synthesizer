@@ -16,14 +16,14 @@ const noteFrequencies = {
   "D4": { frequency: 293.66, key: { code: 76, name: "L" } },
   "D#4/Eb4": { frequency: 311.13, key: { code: 59, name: ";" } },
   "E4": { frequency: 329.63, key: { code: 39, name: "'" } },
-  "F4": { frequency: 349.23, key: { code: 221, name: "[" } },
-  "F#4/Gb4": { frequency: 369.99, key: { code: 220, name: "\\" } },
-  "G4": { frequency: 392.00, key: { code: 90, name: "Z" } },
-  "G#4/Ab4": { frequency: 415.30, key: { code: 88, name: "X" } },
-  "A4": { frequency: 440.00, key: { code: 67, name: "C" } },
-  "A#4/Bb4": { frequency: 466.16, key: { code: 86, name: "V" } },
-  "B4": { frequency: 493.88, key: { code: 66, name: "B" } },
-  "C5": { frequency: 523.25, key: { code: 78, name: "N" } }
+  // "F4": { frequency: 349.23, key: { code: 221, name: "[" } },
+  // "F#4/Gb4": { frequency: 369.99, key: { code: 220, name: "\\" } },
+  // "G4": { frequency: 392.00, key: { code: 90, name: "Z" } },
+  // "G#4/Ab4": { frequency: 415.30, key: { code: 88, name: "X" } },
+  // "A4": { frequency: 440.00, key: { code: 67, name: "C" } },
+  // "A#4/Bb4": { frequency: 466.16, key: { code: 86, name: "V" } },
+  // "B4": { frequency: 493.88, key: { code: 66, name: "B" } },
+  // "C5": { frequency: 523.25, key: { code: 78, name: "N" } }
 };
 
 const waveForms = [

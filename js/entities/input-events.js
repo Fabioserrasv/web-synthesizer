@@ -2,12 +2,12 @@ class InputEvents {
   static assignEvents(display, synthesizer) {
     const {
       waveSelector,
-      denoteSelector,
+      detuneSelector,
       lowpassFreqSelector,
       lowpassQSelector,
     } = display;
 
-    const modifyDenote = () => changeDenote(display, synthesizer);
+    const modifyDetune = () => changeDetune(display, synthesizer);
     const modifyLowpass = () => changeLowpass(display, synthesizer);
 
     const startPlaying = (event) => playByKeyCode(synthesizer, event);
@@ -16,7 +16,7 @@ class InputEvents {
     waveSelector.addEventListener('change', (e) => {
       synthesizer.setWaveForm(e.target.value);
     });
-    denoteSelector.addEventListener('change', modifyDenote);
+    detuneSelector.addEventListener('change', modifyDetune);
     window.addEventListener('keydown', startPlaying);
     window.addEventListener('keyup', stopPlaying);
     lowpassFreqSelector.addEventListener('change', modifyLowpass);
